@@ -1,0 +1,61 @@
+soru2
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+
+void siralama(int dizi[], int byt) {
+    int temp;
+    for (int i = 0; i < byt / 2; i++) {
+        int max_index = i;
+        for (int j = i + 1; j < byt - i; j++) {
+            if (dizi[j] > dizi[max_index]) {
+                max_index = j;
+            }
+        }
+
+        int min_index = i;
+        for (int j = i + 1; j < byt - i; j++) {
+            if (dizi[j] < dizi[min_index]) {
+                min_index = j;
+            }
+        }
+
+        temp = dizi[i];
+        dizi[i] = dizi[max_index];
+        dizi[max_index] = temp;
+
+        temp = dizi[byt - i - 1];
+        dizi[byt - i - 1] = dizi[min_index];
+        dizi[min_index] = temp;
+    }
+}
+
+int main() {
+    const int boyut = 6; 
+    int dizi[boyut];
+
+    srand(time(NULL)); 
+
+
+    for (int i = 0; i < boyut; i++) {
+        dizi[i] = rand() % 100; 
+    }
+
+    printf("Orijinal Dizi: ");
+    for (int i = 0; i < boyut; i++) {
+        printf("%d ", dizi[i]);
+    }
+    printf("\n");
+
+    siralama(dizi, boyut);
+
+
+    printf("Sıralanmış Dizi (Büyükten Küçüğe): ");
+    for (int i = 0; i < boyut; i++) {
+        printf("%d ", dizi[i]);
+    }
+    printf("\n");
+
+    return 0;
+}

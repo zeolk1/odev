@@ -1,0 +1,56 @@
+soru1 
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+
+void insertionSort(int dizi[], int boyut) {
+    int i, anahtar, j;
+    for (i = 1; i < boyut; i++) {
+        anahtar = dizi[i];
+        j = i - 1;
+
+        while (j >= 0 && dizi[j] > anahtar) {
+            dizi[j + 1] = dizi[j];
+            j = j - 1;
+        }
+        dizi[j + 1] = anahtar;
+    }
+}
+
+void selectionSort(int dizi[], int boyut) {
+    int i, j, minIndex;
+    for (i = 0; i < boyut - 1; i++) {
+        minIndex = i;
+        for (j = i + 1; j < boyut; j++)
+            if (dizi[j] < dizi[minIndex])
+                minIndex = j;
+
+        int temp = dizi[minIndex];
+        dizi[minIndex] = dizi[i];
+        dizi[i] = temp;
+    }
+}
+
+int main() {
+    int dizi[500];
+    srand(time(0));
+
+    for (int i = 0; i < 500; i++) {
+        dizi[i] = rand() % 1001; 
+    }
+
+    clock_t insertionBas = clock();
+    insertionSort(dizi, 500);
+    clock_t insertionBit = clock();
+    double insertionSur = ((double) (insertionBit - insertionBas)) / CLOCKS_PER_SEC;
+
+    clock_t selectionBas = clock();
+    selectionSort(dizi, 500);
+    clock_t selectionBit = clock();
+    double selectionSur = ((double) (selectionBit - selectionBas)) / CLOCKS_PER_SEC;
+
+    printf("Birleştirmeli Sıralama süresi: %f s\n", insertionSur);
+    printf("Seçmeli Sıralama süresi: %f s\n", selectionSur);
+
+    return 0;
+}

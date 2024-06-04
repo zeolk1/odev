@@ -1,0 +1,38 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+#define ALFABET_SAYISI 26
+
+struct TrieNode {
+    struct TrieNode* children[ALFABET_SAYISI];
+    int isEndOfWord;
+};
+
+struct TrieNode* getNode(void) {
+    struct TrieNode* pNode = (struct TrieNode*)malloc(sizeof(struct TrieNode));
+    pNode->isEndOfWord = 0;
+    for (int i = 0; i < ALFABET_SAYISI; i++)
+        pNode->children[i] = NULL;
+    return pNode;
+}
+
+void insert(struct TrieNode* root, const char* key) {
+    struct TrieNode* pCrawl = root;
+    for (int i = 0; key[i] != '\0'; i++) {
+        int index = key[i] - 'a';
+        if (!pCrawl->children[index])
+            pCrawl->children[index] = getNode();
+        pCrawl = pCrawl->children[index];
+    }
+    pCrawl->isEndOfWord = 1;
+}
+
+int main() {
+    struct TrieNode* root = getNode();
+    insert(root, "y");
+    insert(root, "ya");
+    insert(root, "yar");
+    insert(root, "yay");
+
+    return 0;
+}
